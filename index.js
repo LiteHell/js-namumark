@@ -180,5 +180,5 @@ function Namumark(articleName, _options) {
     this.renderHtml = () => "";
 }
 Namumark.Renderers = {};
-Namumark.Renderers.BasicHTML = require('./basicHTMLRenderer');
+Namumark.Renderers.HTMLForDebugging = require('./basicHTMLRenderer');
 module.exports = Namumark;
