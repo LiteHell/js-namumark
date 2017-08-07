@@ -48,6 +48,7 @@ app.get('/wiki/:name', (req, res) => {
     let namumark = new Namumark(name, {
         wiki: doc
     });
+    namumark.setRenderer(Namumark.Renderers.HTML); // 이거 안해도 자동으로 지정됨. 그냥 해두는거.
     namumark.parse((renderResults) => {
         let {
             html,

@@ -1,7 +1,6 @@
 const defaultOptions = require('./defaultOptions.js'),
     extend = require('extend'),
     async = require('async'),
-    renderer = new (require('./basicHTMLRenderer')),
     {multiBrackets} = require('./rules'),
     redirectPattern = /^#(?:redirect|넘겨주기) (.+)$/im,
     {
@@ -16,9 +15,13 @@ const defaultOptions = require('./defaultOptions.js'),
 
 function Namumark(articleName, _options) {
     let options = extend(true, defaultOptions, _options),
-        wikitext = options.wiki.read(articleName);
+        wikitext = options.wiki.read(articleName),
+        rendererClass = require('./basicHTMLRenderer'),
+        rendererOptions = null,
+        renderer = null;
 
     function parse(callback) {
+        renderer = rendererOptions ? new rendererClass(rendererOptions) : new rendererClass();
         let line = '',
             now = '',
             tokens = [];
@@ -31,9 +34,8 @@ function Namumark(articleName, _options) {
             let temp = {
                 pos: i
             };
-            let isLineStarting = i == 0 || wikitext[i - 1] == '\n';
             now = wikitext[i];
-            if (line == '' && now == ' ' && isLineStarting && (temp = listParser(wikitext, i, v => i = v))) {
+            if (line == '' && now == ' ' && (temp = listParser(wikitext, i, v => i = v))) {
                 tokens = tokens.concat(temp);
                 line = '';
                 now = '';
@@ -177,7 +179,7 @@ function Namumark(articleName, _options) {
     }
     this.parse = parse;
     this.setIncluded = () => {options.included = true;};
-    this.setRenderer = r => {renderer = r; return;}
+    this.setRenderer = (r, o = null) => {rendererClass = r; rendererOptions = o; return;}
 }
 Namumark.Renderers = {};
 Namumark.Renderers.HTML = require('./basicHTMLRenderer');
