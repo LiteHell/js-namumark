@@ -33,6 +33,13 @@ function HTMLRenderer() {
             }
         }
     }
+    function ObjToCssString(obj) {
+        let styleString = "";
+        for(let name in obj) {
+            styleString += `${name}:${obj[name]}; `;
+        }
+        return styleString.substring(0, styleString.length - 1);
+    }
     let _ht = this;
     this.processToken = (i) => {
         //console.log(i);
@@ -63,10 +70,10 @@ function HTMLRenderer() {
                 appendResult('</li>');
                 break;
             case 'table-start':
-                appendResult(`<table${i.options > 0 ? " style=\"" + ObjToCssString(i.options) +'"' : ''}>`);
+                appendResult(`<table${i.options ? " style=\"" + ObjToCssString(i.options) +'"' : ''}>`);
                 break;
             case 'table-col-start':
-                appendResult(`<td${i.options > 0 ? " style=\"" + ObjToCssString(i.options) +'"' : ''}${i.colspan > 0 ? ` colspan=${i.colspan}` : ''}${i.rowspan ? ` rowspan=${i.rowspan}` : ''}>`);
+                appendResult(`<td${i.options ? " style=\"" + ObjToCssString(i.options) +'"' : ''}${i.colspan > 0 ? ` colspan=${i.colspan}` : ''}${i.rowspan ? ` rowspan=${i.rowspan}` : ''}>`);
                 break;
             case 'table-col-end':
                 appendResult('</td>');

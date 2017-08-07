@@ -6,8 +6,9 @@ module.exports = (text, type, configs) => {
             external: true,
             target: href[0]
         }, {
-            name: "plain",
-            text: href[0]
+            name: href.length > 1 ? "wikitext" : "plain",
+            parseFormat: true,
+            text: href.length > 1 ? href[1] : href[0]
         }, {
             name: "link-end"
         }];
