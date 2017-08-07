@@ -1,6 +1,6 @@
 {
   "name": "js-namumark",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Namumark parser written by LiteHell",
   "main": "index.js",
   "scripts": {
