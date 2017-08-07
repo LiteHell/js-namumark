@@ -1,6 +1,14 @@
 article {
     font-size: 16px;
 }
+/* error */
+.wikitext-syntax-error {
+    font-weight: bold;
+    font-size: 18px;
+    border: 1px solid red;
+    background: red;
+    color: white;
+}
 /* table */
 table,tr,td {
     border: 1px solid black;
