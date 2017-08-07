@@ -21,7 +21,8 @@
   "dependencies": {
     "async": "^2.5.0",
     "extend": "^3.0.1",
-    "htmlspecialchars": "^1.0.5"
+    "htmlspecialchars": "^1.0.5",
+    "moment": "^2.18.1"
   },
   "devDependencies": {
     "body-parser": "^1.17.2",
