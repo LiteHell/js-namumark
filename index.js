@@ -1,6 +1,7 @@
 const defaultOptions = require('./defaultOptions.js'),
     extend = require('extend'),
     async = require('async'),
+    renderer = new (require('./basicHTMLRenderer')),
     {multiBrackets} = require('./rules'),
     redirectPattern = /^#(?:redirect|넘겨주기) (.+)$/im,
     {
@@ -66,22 +67,21 @@ function Namumark(articleName, _options) {
         }
         if(line.length != 0)
             tokens = tokens.concat([{name: "wikitext", treatAsLine: true, text:line}]);
-        function resolveWikitextTokens(_p) {
+        function processTokens(_p) {
             let newarr = JSON.parse(JSON.stringify(_p));
-            while(newarr.some(v => v.name === "wikitext")) {
-                for(let i = 0; i < newarr.length; i++) {
-                    let v = newarr[i];
-                    if(v.name !== "wikitext")
-                        continue;
-                    else if(v.parseFormat || v.treatAsBlock)
-                        newarr.splice(i, 1, resolveWikitextTokens(blockParser(v.text)));
-                    else if(v.treatAsLine)
-                        newarr.splice(i, 1, resolveWikitextTokens(lineParser(v.text)));
-                }
+            for(let i = 0; i < newarr.length; i++) {
+                let v = newarr[i];
+                if(v.constructor.name === "Array")
+                    processTokens(v);
+                else if(v.name !== "wikitext")
+                    renderer.processToken(v);
+                else if(v.parseFormat || v.treatAsBlock)
+                    processTokens(blockParser(v.text));
+                else if(v.treatAsLine)
+                    processTokens(lineParser(v.text));
             }
-            return newarr;
         }
-        callback(resolveWikitextTokens(tokens));
+        setImmediate(() => {processTokens(tokens); callback(renderer.getResult());});
     }
 
     function callProcessor(processorName, args) {
@@ -177,8 +177,8 @@ function Namumark(articleName, _options) {
     }
     this.parse = parse;
     this.setIncluded = () => {options.included = true;};
-    this.renderHtml = () => "";
+    this.setRenderer = r => {renderer = r; return;}
 }
 Namumark.Renderers = {};
-Namumark.Renderers.HTMLForDebugging = require('./basicHTMLRenderer');
+Namumark.Renderers.HTML = require('./basicHTMLRenderer');
 module.exports = Namumark;

@@ -2,11 +2,9 @@ module.exports = (text, type, configs) => {
     let defaultResult = [{name: "plain", text: `[${text}]`}];
     if (text.startsWith('*') && /^\*([^ ]*) (.+)$/.test(text)) {
         let matches = /^\*([^ ]*) (.+)$/.exec(text);
-        return [matches[1].length === 0 ? {
-            name: "footnote-start"
-        } : {
+        return [{
             name: "footnote-start",
-            supText: matches[1]
+            supText: matches[1].length === 0 ? null : matches[1]
         }, {
             name: "wikitext",
             treatAsBlock: true,

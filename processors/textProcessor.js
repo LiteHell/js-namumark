@@ -12,6 +12,7 @@ module.exports = (text, type) => {
         case "'''":
         case "''":
         case "--":
+        case "~~":
         case "__":
         case "^^":
         case ",,":

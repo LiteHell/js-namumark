@@ -1,0 +1,59 @@
+article {
+    font-size: 16px;
+}
+/* table */
+table,tr,td {
+    border: 1px solid black;
+}
+/* footnote*/
+sup.footnote-sup {
+    color: red;
+}
+a.footnote {
+    text-decoration: none;
+}
+a.footnote:hover {
+    text-decoration: underline;
+}
+/* links */
+.wiki-external-link:before {
+    content: "外";
+    background: green;
+    color: white;
+}
+.wiki-external-link {
+    color: green;
+}
+.wiki-internal-link {
+    color: blue;
+}
+/* toc macro */
+.wiki-toc {
+    padding: 10px;
+    border: 1px solid black;
+}
+.wiki-toc .wiki-toc-heading {
+    font-weight: bold;
+    font-size: 20px;
+}
+.wiki-toc .wiki-toc-item {
+    margin-left: 1rem;
+}
+.wiki-toc .wiki-toc-item.wiki-toc-item-indent-1 {
+    margin-left: 1rem;
+}
+.wiki-toc .wiki-toc-item.wiki-toc-item-indent-2 {
+    margin-left: 2rem;
+}
+.wiki-toc .wiki-toc-item.wiki-toc-item-indent-3 {
+    margin-left: 3rem;
+}
+.wiki-toc .wiki-toc-item.wiki-toc-item-indent-4 {
+    margin-left: 4rem;
+}
+.wiki-toc .wiki-toc-item.wiki-toc-item-indent-5 {
+    margin-left: 5rem;
+}
+.wiki-toc .wiki-toc-item.wiki-toc-item-indent-6 {
+    margin-left: 6rem;
+}

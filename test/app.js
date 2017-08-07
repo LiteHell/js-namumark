@@ -9,38 +9,55 @@ const fs = require('fs'),
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 
+let doc = {
+    exists: (name) => fs.existsSync(`${__dirname}/docs/${encodeURIComponent(name)}`),
+    write: (name, wikitext) => fs.writeFileSync(`${__dirname}/docs/${encodeURIComponent(name)}`, wikitext, {
+        encoding: 'utf8'
+    }),
+    read: (name) => doc.exists(name) ? fs.readFileSync(`${__dirname}/docs/${encodeURIComponent(name)}`, {
+        encoding: 'utf8'
+    }) : ''
+}
+app.use(express.static(__dirname + '/static'))
 app.get('/', (req, res) => {
-    res.render('index');
+    if (doc.exists('MainPage'))
+        res.redirect('/wiki/MainPage');
+    else
+        res.redirect('/edit/MainPage')
 });
-app.get('/write', (req, res) => {
-    res.redirect('/');
+app.get('/edit/:name', (req, res) => {
+    let name = req.params.name;
+    res.render('edit', {
+        name: name,
+        wikitext: doc.exists(name) ? doc.read(name) : '' 
+    });
 })
-app.post('/write', bodyParser.urlencoded({
+app.post('/edit/:name', bodyParser.urlencoded({
     limit: 999999999999,
     type: 'application/x-www-form-urlencoded'
 }), (req, res) => {
     let wikitext = req.body.wikitext.replace(/\r\n/g, '\n');
-    fs.writeFileSync(`${__dirname}/docs/${encodeURIComponent(req.body.title)}`, wikitext, {
-        encoding: 'utf8'
+    let name = req.params.name;
+    doc.write(name, wikitext);
+    res.redirect(`/wiki/${name}`);
+});
+app.get('/wiki/:name', (req, res) => {
+    let name = req.params.name;
+    if(!doc.exists(name))
+        return res.redirect(`/edit/${name}`);
+    let namumark = new Namumark(name, {
+        wiki: doc
     });
-    let namumark = new Namumark(req.body.title, {
-        wiki: {
-            read: (name) => {
-                if (fs.existsSync(`${__dirname}/docs/${encodeURIComponent(req.body.title)}`))
-                    return fs.readFileSync(`${__dirname}/docs/${encodeURIComponent(req.body.title)}`, {
-                        encoding: 'utf8'
-                    });
-                else
-                    return '';
-            }
-        }
-    });
-    namumark.parse((parseResult) => {
-        let renderResult = req.body.render === 'yes' ? Namumark.Renderers.BasicHTML(parseResult) : null;
-        res.render('result', {
-            title: req.body.title,
-            parseResult: require('util').inspect(parseResult, {showHidden: false, depth: null, maxArrayLength: null}),
-            renderResult: renderResult
+    namumark.parse((renderResults) => {
+        let {
+            html,
+            categories
+        } = renderResults;
+        res.render('wiki', {
+            title: name,
+            //parseResult: require('util').inspect(parseResult, {showHidden: false, depth: null, maxArrayLength: null}),
+            renderResult: html,
+            categoires: categories
         });
     });
 });

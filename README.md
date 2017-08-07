@@ -1,9 +1,26 @@
 # js-namumark
-원래 목적은 [php-namumark](https://github.com/koreapyj/php-namumark)를 node.js로 포팅하는 거.
-중간에 조금씩 바꾸고 하다보니 이렇게 됨.
+원래 목적은 [php-namumark](https://github.com/koreapyj/php-namumark)를 node.js로 포팅하는 거였으나 만들다 보니 이렇게 됬네요.
 
-좆같이 굴러감. 나도 최대한 노력했음. 근데 내 코딩실력이 병신이라 좆같이 굴러감. 이건 어쩔 수 없더라.
-그래도 될 만큼은 되니 쓸 사람은 렌더러 새로 짜서 잘 써보세요. 파서 사용방법은 test폴더에 app.js 참고해보시고, 렌더러는 basicHTMLRenderer.js(파일이름에 낚이지 마셈. 디버그용으로 짠 쓰레기 렌더러)보고 참고해서 새로 짜시면 됩니다.
+## 사용 방법
+```js
+let Namumark = require('namumark'),
+    namumark = new Namumark('doctitle', {
+        wiki:{
+            read: (title) => 'content' // do something here
+        }
+        // ... see defaultOptions.js for more options
+    });
+// you can change renderer by namumark.setRenderer()
+namumark.parse((result) => {
+    let {html, categories} = result;
+    console.log('complete!');
+    // Do something here
+})
+```
 
-# 여담
-씨발... 내 시간... 이 짓거리 할 시간에 공부를 했으면...
+## 버그
+버그가 많습니다. 발코딩이라 그렇습니다. 양해 바랍니다.
+기본 HTML 렌더러는 매우 기본적인 기능만 합니다. 이것도 양해 바랍니다.
+
+## 테스트
+`node test/app.js`를 하면 테스트용 간단한 위키 앱이 돌아갑니다. 파서 테스트용이니 역사기능은 당연히 없습니다...
