@@ -95,11 +95,9 @@ module.exports = (wikitext, pos, setpos) => {
     let lineStart = pos,
         result = [],
         isList = null,
-        i;
-    for (i = lineStart; i++; i < wikitext.length) {
+        i = pos;
+    for (; i++; i < wikitext.length) {
         let char = wikitext[i];
-        if (result.length === 0 && char === null)
-            return null;
         if (char != ' ') {
             if (lineStart === i)
                 break;
