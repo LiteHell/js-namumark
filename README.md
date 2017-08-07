@@ -10,7 +10,9 @@ let Namumark = require('namumark'),
         }
         // ... see defaultOptions.js for more options
     });
-// you can change renderer by namumark.setRenderer()
+// you can change renderer by namumark.setRenderer().
+// default is Namumark.Renderers.HTML
+// e.g. namumark.setRenderer(SomeRendererClass);
 namumark.parse((result) => {
     // result object can be diffrerent by renderer.
     let {html, categories} = result;
