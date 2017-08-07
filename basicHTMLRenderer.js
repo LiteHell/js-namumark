@@ -1,4 +1,5 @@
-const encodeHTMLComponent = require('htmlspecialchars');
+const encodeHTMLComponent = require('htmlspecialchars'),
+      moment = require('moment');
 
 function HTMLRenderer() {
     let resultTemp = [],
@@ -8,7 +9,9 @@ function HTMLRenderer() {
         isHeadingNow = false,
         isFootnoteNow = false,
         lastHeadingLevel = 0,
+        hLevels = {1:0,2:0,3:0,4:0,5:0,6:0},
         footnoteCount = 0,
+        headingCount = 0,
         lastListOrdered = [],
         wasPreMono = false;
     function appendResult(value) {
@@ -30,6 +33,7 @@ function HTMLRenderer() {
             }
         }
     }
+    let _ht = this;
     this.processToken = (i) => {
         //console.log(i);
         switch (i.name) {
@@ -112,12 +116,26 @@ function HTMLRenderer() {
                     case 'br':
                         appendResult('<br>');
                         break;
+                    case 'age':
+                        if (i.options.length === 0 || typeof i.options[0] !== "string")
+                            appendResult('<span class="wikitext-syntax-error">age 매크로 : 매개변수가 없거나 익명 매개변수가 아닙니다.</span>');
+                        else {
+                            let mo = moment(i.options[0], 'YYYY-MM-DD')
+                            let koreanWay = i.options.length > 1 && i.options.slice(1).indexOf('korean') !== -1;
+                            if(!mo.isValid())
+                                appendResult('<span class="wikitext-syntax-error">age 매크로 : 날짜 형식이 잘못됐습니다.</span>')
+                            else {
+                                let years = koreanWay ? moment().year() - mo.year() + 1 : moment().diff(mo, 'years');
+                                appendResult(years.toString())
+                            }
+                        }
+                        break;
                     case 'date':
                         appendResult(Date.toString());
                         break;
                     case 'youtube':
                         if (i.options.length == 0) {
-                            appendResult('<strong style="color: red; border: 1px solid red;">오류 : youtube 동영상 ID가 제공되지 않았습니다!</strong>')
+                            appendResult('<span class="wikitext-syntax-error">오류 : youtube 동영상 ID가 제공되지 않았습니다!</span>')
                         } else if (i.options.length >= 1) {
                             if (typeof i.options[0] === 'string')
                                 if (i.options.length == 1)
@@ -125,7 +143,7 @@ function HTMLRenderer() {
                             else
                                 appendResult(`<iframe src="//www.youtube.com/embed/${i.options[0]}" style="${ObjToCssString(i.options.slice(1))}"></iframe>`)
                             else
-                                appendResult('<strong style="color: red; border: 1px solid red;">오류 : youtube 동영상 ID는 첫번째 인자로 제공되어야 합니다!</strong>')
+                                appendResult('<span class="wikitext-syntax-error">오류 : youtube 동영상 ID는 첫번째 인자로 제공되어야 합니다!</span>')
                         }
                         break;
                     case '각주':
@@ -211,8 +229,11 @@ function HTMLRenderer() {
             case 'comment':
                 break; // 신경쓸 필요 X
             case 'heading-start':
+                if(lastHeadingLevel < i.level)
+                    hLevels[i.level]=0;
                 lastHeadingLevel = i.level;
-                appendResult(`<h${i.level}>`);
+                hLevels[i.level]++;
+                appendResult(`<h${i.level} id="heading-${++headingCount}"><a href="#wiki-toc">${hLevels[i.level]}. </a>`);
                 isHeadingNow = true;
                 headings.push({level: i.level, value: ''});
                 break;
@@ -232,6 +253,9 @@ function HTMLRenderer() {
     }
     function finalLoop() {
         result = '';
+        if(footnotes.length > 0) {
+            _ht.processToken({name: 'macro', macroName: '각주'});
+        }
         for(let i = 0; i < resultTemp.length; i++) {
             let item = resultTemp[i];
             if(typeof item === "string")
@@ -241,9 +265,15 @@ function HTMLRenderer() {
                     case 'toc':
                     case 'tableofcontents':
                     case '목차':
-                        let macroContent = '<div class="wiki-toc"><div class="wiki-toc-heading">목차</div>';
+                        let macroContent = '<div class="wiki-toc" id="wiki-toc"><div class="wiki-toc-heading">목차</div>';
+                        let hLevels = {1:0,2:0,3:0,4:0,5:0,6:0}, lastLevel = -1;
                         for(let j = 0; j < headings.length; j++) {
-                            macroContent += `<div class="wiki-toc-item wiki-toc-item-indent-${headings[j].level}">${headings[j].value}</div>`;
+                            let curHeading = headings[j];
+                            if(lastLevel != -1 && curHeading.level > lastLevel)
+                                hLevels[curHeading.level] = 0;
+                            hLevels[curHeading.level]++;
+                            macroContent += `<div class="wiki-toc-item wiki-toc-item-indent-${curHeading.level}"><a href="#heading-${j+1}">${hLevels[curHeading.level]}.</a> ${curHeading.value}</div>`;
+                            lastLevel = curHeading.level;
                         }
                         macroContent += '</div></div>';
                         result += macroContent;
