@@ -31,11 +31,13 @@ module.exports = (text, type, configs) => {
             let macroName = matches[1], 
                 optionSplitted = matches[2].split(','),
                 options = [];
-            for(let i of optionSplitted) {
-                if(i.indexOf('=') == -1) {
-                    options.push(i);
-                } else {
-                    options.push({name: i.split('=')[0], value: i.split('=')[1]});
+            if(matches[2].length != 0) {
+                for(let i of optionSplitted) {
+                    if(i.indexOf('=') == -1) {
+                        options.push(i);
+                    } else {
+                        options.push({name: i.split('=')[0], value: i.split('=')[1]});
+                    }
                 }
             }
             return [{name: "macro", macroName: macroName, options: options}];
