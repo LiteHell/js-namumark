@@ -94,6 +94,7 @@ function finishTokens(tokens) {
 module.exports = (wikitext, pos, setpos) => {
     let lineStart = pos,
         result = [],
+        isList = null,
         i;
     for (i = lineStart; i++; i < wikitext.length) {
         let char = wikitext[i];
@@ -104,6 +105,7 @@ module.exports = (wikitext, pos, setpos) => {
                 break;
             let level = i - lineStart,
                 matched = false,
+                quit = false,
                 eol = seekEOL(wikitext, i),
                 innerString = wikitext.substring(i, eol);
             for (let j in listTags) {
@@ -111,6 +113,12 @@ module.exports = (wikitext, pos, setpos) => {
                 innerString = wikitext.substring(i + j.length, eol);
                 let startNoSpecifiedPattern = new RegExp(j.replace(/\./g, '\\.').replace(/\*/g, '\\*') + '#([0-9]+)'); // 1.#32 와 같이 시작번호를 지정하는 문법
                 if (wikitext.substring(i).startsWith(j)) {
+                    if(isList === null)
+                        isList = true;
+                    else if(!isList) {
+                        quit = true;
+                        break;
+                    }
                     matched = true;
                     if (startNoSpecifiedPattern.test(wikitext.substring(i))) {
                         let startNo = parseInt(startNoSpecifiedPattern.exec(wikitext.substring(i))[1]);
@@ -135,7 +143,17 @@ module.exports = (wikitext, pos, setpos) => {
                     break;
                 }
             }
+            if(quit) {
+                i = lineStart;
+                break;
+            }
             if (!matched) {
+                if(isList === null) {
+                    isList = false;
+                } else if(isList) {
+                    i = lineStart;
+                    break;
+                }
                 result.push({
                     name: "indent-temp",
                     level: level,
@@ -152,7 +170,7 @@ module.exports = (wikitext, pos, setpos) => {
         result = null;
     else{
         result = finishTokens(result);
-        setpos(i - 2);
+        setpos(i - 1);
     }
     return result;
 }

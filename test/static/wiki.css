@@ -5,6 +5,26 @@ article {
 table,tr,td {
     border: 1px solid black;
 }
+/* intent */
+.wiki-indent {
+    margin-left: 2rem;
+}
+/* font size levels */
+.wiki-size-1-level {
+    font-size: 18px;
+}
+.wiki-size-2-level {
+    font-size: 20px;
+}
+.wiki-size-3-level {
+    font-size: 22px;
+}
+.wiki-size-4-level {
+    font-size: 24px;
+}
+.wiki-size-5-level {
+    font-size: 26px;
+}
 /* footnote*/
 sup.footnote-sup {
     color: red;

@@ -22,7 +22,7 @@ module.exports = (text, type) => {
                 return [{name: "unsafe-plain", text: text.substring(6)}];
             } else if(/^#([A-Fa-f0-9]{3,6}) (.*)$/.test(text)) {
                 let matches = /^#([A-Fa-f0-9]{3,6}) (.*)$/.exec(text);
-                if(match[1].length === 0 && match[2].length === 0)
+                if(matches[1].length === 0 && matches[2].length === 0)
                     return [{name: "plain", text: text}];
                 return [{name: "font-color-start", color: matches[1]}, {name: "wikitext", parseFormat: true, text: matches[2]}, {name: "font-color-end"}];
             } else if(/^\+([1-5]) (.*)$/.test(text)) {

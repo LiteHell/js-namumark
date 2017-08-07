@@ -31,7 +31,7 @@ function HTMLRenderer() {
         }
     }
     this.processToken = (i) => {
-        console.log(i);
+        //console.log(i);
         switch (i.name) {
             case 'blockquote-start':
                 appendResult('<blockquote>');

@@ -57,7 +57,7 @@ app.get('/wiki/:name', (req, res) => {
             title: name,
             //parseResult: require('util').inspect(parseResult, {showHidden: false, depth: null, maxArrayLength: null}),
             renderResult: html,
-            categoires: categories
+            categories: categories
         });
     });
 });
