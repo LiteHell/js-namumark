@@ -5,5 +5,5 @@ module.exports = {
     "allowedExternalImageExts": ["jpg", "jpeg", "png", "gif"],
     "included": false,
     "includeParameters": {},
-    "macroNames": ["br", "date", "목차", "tableofcontents", "각주", "footnote", "toc", "youtube", "include", "age"]
+    "macroNames": ["br", "date", "목차", "tableofcontents", "각주", "footnote", "toc", "youtube", "include", "age", "dday"]
 }

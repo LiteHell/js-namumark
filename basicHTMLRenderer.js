@@ -144,6 +144,19 @@ function HTMLRenderer(_options) {
                     case 'br':
                         appendResult('<br>');
                         break;
+                    case 'dday':
+                        if (i.options.length === 0 || typeof i.options[0] !== "string")
+                            appendResult('<span class="wikitext-syntax-error">dday 매크로 : 매개변수가 없거나 익명 매개변수가 아닙니다.</span>');
+                        else {
+                            let mo = moment(i.options[0], 'YYYY-MM-DD')
+                            if(!mo.isValid())
+                                appendResult('<span class="wikitext-syntax-error">dday 매크로 : 날짜 형식이 잘못됐습니다.</span>')
+                            else {
+                                let days = -moment().diff(mo, 'days');
+                                appendResult(days.toString())
+                            }
+                        }
+                        break;
                     case 'age':
                         if (i.options.length === 0 || typeof i.options[0] !== "string")
                             appendResult('<span class="wikitext-syntax-error">age 매크로 : 매개변수가 없거나 익명 매개변수가 아닙니다.</span>');
