@@ -13,8 +13,10 @@ let Namumark = require('namumark'),
 // you can change renderer by namumark.setRenderer().
 // default is Namumark.Renderers.HTML
 // e.g. namumark.setRenderer(SomeRendererClass);
-namumark.parse((result) => {
+namumark.parse((err, result) => {
     // result object can be diffrerent by renderer.
+    if (err)
+        console.log('ERROR!');
     let {html, categories} = result;
     console.log('complete!');
     // Do something here
