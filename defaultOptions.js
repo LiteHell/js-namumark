@@ -4,6 +4,6 @@ module.exports = {
     },
     "allowedExternalImageExts": ["jpg", "jpeg", "png", "gif"],
     "included": false,
-    "macroNames": ["br", "date", "목차", "tableofcontents", "각주", "footnote", "toc", "youtube", "include", "age"],
-    "processIncludeOnParser": false // if false, include macro will processed as {name: "macro", macroName: "include", params: ["docName"]}
+    "includeParameters": {},
+    "macroNames": ["br", "date", "목차", "tableofcontents", "각주", "footnote", "toc", "youtube", "include", "age"]
 }

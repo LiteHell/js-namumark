@@ -13,12 +13,6 @@ module.exports = (text, type, configs) => {
             name: "footnote-end"
         }];
     } else {
-        if(configs.processIncludeOnParser && /^include\((.+)\)/.test(text)) {
-            let Namumark = require('../index.js');
-            let childPage = new Namumark(/^include\((.+)\)/.exec(text)[1], configs);
-            childPage.setIncluded();
-            return childPage.parse();
-        }
         if(/^[^\(]+$/.test(text)) {
             if(configs.macroNames.indexOf(text) == -1)
                 return defaultResult;

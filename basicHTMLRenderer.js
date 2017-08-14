@@ -1,11 +1,32 @@
 const encodeHTMLComponent = require('htmlspecialchars'),
-      moment = require('moment');
+      moment = require('moment'),
+      extend = require('extend'),
+      async = require('async'),
+      Namumark = require(__dirname + '/index');
+let defaultOptions = {
+    wiki: {
+        exists: (title, isImage) => {return true;},
+        includeParserOptions: {},
+        resolveUrl: (target, type) => {
+            switch(type) {
+                case 'wiki':
+                    return `/wiki/${target}`
+                    break;
+                case 'internal-image':
+                    return `/file/${target}`
+                    break;
+            }
+        }
+    }
+};
 
-function HTMLRenderer() {
+function HTMLRenderer(_options) {
     let resultTemp = [],
+        options = extend(true, defaultOptions, _options),
         headings = [],
         footnotes = [],
         categories = [],
+        links = [],
         isHeadingNow = false,
         isFootnoteNow = false,
         lastHeadingLevel = 0,
@@ -94,7 +115,7 @@ function HTMLRenderer() {
                 appendResult('</div>');
                 break;
             case 'link-start':
-                appendResult(`<a href="${i.internal ? `/wiki/${i.target}` : i.target}" class="${i.internal ? 'wiki-internal-link' : ''}${i.external ? 'wiki-external-link' : ''}">`);
+                appendResult(`<a href="${i.internal ? options.wiki.resolveUrl(i.target, 'wiki') : i.target}" class="${i.internal ? 'wiki-internal-link' : ''}${i.external ? 'wiki-external-link' : ''}">`);
                 break;
             case 'link-end':
                 appendResult('</a>');
@@ -106,7 +127,7 @@ function HTMLRenderer() {
                 categories.push(i.categoryName);
                 break;
             case 'image':
-                appendResult(`<img src="/wiki-image/${i.target}"${i.fileOpts ? ` style=${ObjToCssString(i.fileOpts)}` : ''}></img>`)
+                appendResult(`<img src="${options.wiki.resolveUrl(i.target, 'internal-image')}"${i.fileOpts ? ` style=${ObjToCssString(i.fileOpts)}` : ''}></img>`)
                 break;
             case 'footnote-start':
                 let fnNo = ++footnoteCount;
@@ -167,11 +188,12 @@ function HTMLRenderer() {
                     case '목차':
                     case 'tableofcontents':
                     case 'toc':
-                        appendResult({name: 'macro', macroName: i.macroName});
+                    case 'include':
+                        appendResult(i.options ? {name: 'macro', macroName: i.macroName, options: i.options} : {name: 'macro', macroName: i.macroName});
                         break;
                     default:
                         appendResult('[Unsupported Macro]');
-                        break; // 목차, tableofcontents, toc, 각주, footnote, include
+                        break;
                 }
                 break;
             case 'monoscape-font-start':
@@ -258,15 +280,14 @@ function HTMLRenderer() {
                 appendResult('</p>');
         }
     }
-    function finalLoop() {
+    function finalLoop(callback) {
         result = '';
         if(footnotes.length > 0) {
             _ht.processToken({name: 'macro', macroName: '각주'});
         }
-        for(let i = 0; i < resultTemp.length; i++) {
-            let item = resultTemp[i];
+        async.map(resultTemp, (item, mapcb) => {
             if(typeof item === "string")
-                result += item;
+                mapcb(null, item);
             else if(item.name === "macro") {
                 switch(item.macroName) {
                     case 'toc':
@@ -283,17 +304,44 @@ function HTMLRenderer() {
                             lastLevel = curHeading.level;
                         }
                         macroContent += '</div></div>';
-                        result += macroContent;
-                        break;
+                        return mapcb(null, macroContent);
                     case 'include':
-                        result += 'NO INCLUDE SUPPORT ON RENDERER LEVEL';
+                        if(typeof item.options === 'undefined' || item.options.length === 0)
+                            return mapcb(null, '<span class="wikitext-syntax-error">오류 : Include 매크로는 최소한 include할 문서명이 필요합니다.</span>');
+                        else if(typeof item.options[0] !== 'string')
+                            return mapcb(null, '<span class="wikitext-syntax-error">오류 : include할 문서명이 첫번째로 매크로 매개변수로 전달되어야 합니다.</span>');
+                        let childPage = new Namumark(item.options[0], options.includeParserOptions);
+                        childPage.setIncluded();
+                        if(item.options.length > 1) {
+                            let incArgs = {};
+                            for(let k = 1; k < item.options.length; k++) {
+                                let incArg = item.options[k];
+                                if(typeof incArg === 'string') continue;
+                                incArgs[incArg.name] = incArg.value;
+                            }
+                            childPage.setIncludeParameters(incArgs);
+                        }
+                        childPage.setRenderer(null, options);
+                        childPage.parse((e, r) => {if(e) mapcb(null, '[include 파싱/렌더링중 오류 발생]'); else mapcb(null, r.html); console.log('appened!');})
+                        break;
                 }
             }
-        }
-        return result;
+        }, (err, finalFragments) => {
+            if (err)
+                callback(err);
+            let result = '';
+            for(let i = 0; i < finalFragments.length; i++) {
+                result += finalFragments[i];
+            }
+            callback(null, result);
+        });
     }
-    this.getResult = () => {
-        return {html: finalLoop(), categories: categories};
+    this.getResult = (c) => {
+        finalLoop((err, html) => {
+            if (err)
+                return c(err);
+            c(null, {html: html, categories: categories});
+        })
     }
 }
 

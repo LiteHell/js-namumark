@@ -18,4 +18,9 @@ module.exports = [{
     close: ']',
     multiline: false,
     processor: 'macroProcessor'
+}, {
+    open: '@',
+    close: '@',
+    multiline: false,
+    processor: 'textProcessor'
 }]

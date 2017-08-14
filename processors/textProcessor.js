@@ -1,4 +1,4 @@
-module.exports = (text, type) => {
+module.exports = (text, type, options) => {
     let styles = {
         "'''": "strong",
         "''": "italic",
@@ -30,6 +30,13 @@ module.exports = (text, type) => {
                 return [{name: "font-size-start", level: matches[1]}, {name: "wikitext", parseFormat: true, text: matches[2]}, {name: "font-size-end"}];
             };
             return [{name: "monoscape-font-start"}, {name: "plain", text: text}, {name: "monoscape-font-end"}]
+        case "@":
+            if(!options.included)
+                break;
+            if(Object.keys(options.includeParameters).indexOf(text) != -1)
+                return [{name: "wikitext", parseFormat: true, text: options.includeParameters[text]}];
+            else
+                return null;
     }
     return [{name: "plain", text: `${type}${text}${type}`}];
 }

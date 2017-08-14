@@ -20,7 +20,7 @@ function Namumark(articleName, _options) {
         rendererOptions = null,
         renderer = null;
 
-    function parse(callback) {
+    function doParse(callback) {
         renderer = rendererOptions ? new rendererClass(rendererOptions) : new rendererClass();
         let line = '',
             now = '',
@@ -83,7 +83,7 @@ function Namumark(articleName, _options) {
                     processTokens(lineParser(v.text));
             }
         }
-        setImmediate(() => {processTokens(tokens); callback(renderer.getResult());});
+        setImmediate(() => {processTokens(tokens); renderer.getResult((err, result) => {if(err)callback(err);else callback(null, result);})});
     }
 
     function callProcessor(processorName, args) {
@@ -177,10 +177,9 @@ function Namumark(articleName, _options) {
         else
             return [];
     }
-    this.parse = parse;
+    this.parse = c => {setImmediate(() => doParse(c))};
     this.setIncluded = () => {options.included = true;};
-    this.setRenderer = (r, o = null) => {rendererClass = r; rendererOptions = o; return;}
+    this.setIncludeParameters = (paramsObj) => {options.includeParameters = paramsObj;};
+    this.setRenderer = (r = null, o = null) => {if(r!==null)rendererClass = r; if(o!==null)rendererOptions = o; return;}
 }
-Namumark.Renderers = {};
-Namumark.Renderers.HTML = require('./basicHTMLRenderer');
 module.exports = Namumark;
