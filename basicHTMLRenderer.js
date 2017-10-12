@@ -85,7 +85,7 @@ function HTMLRenderer(_options) {
                 appendResult('</div>');
                 break;
             case 'list-item-start':
-                appendResult(i.startNo ? `<li value=${i.startNo}>` : '<li>');
+                appendResult(i.startNo ? `<li value=${encodeHTMLComponent(i.startNo)}>` : '<li>');
                 break;
             case 'list-item-end':
                 appendResult('</li>');
