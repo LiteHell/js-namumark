@@ -5,7 +5,7 @@ module.exports = (wikitext, pos, setpos) => {
         let eol = seekEOL(wikitext, i);
         if(!wikitext.substring(i).startsWith(">"))
             break;
-        let level = /^>+/.exec(wikitext)[0].length,
+        let level = /^>+/.exec(wikitext.substring(i))[0].length,
             line = wikitext.substring(i + level, eol);
         temp.push({level: level, line: line});
     }
