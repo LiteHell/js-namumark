@@ -21,6 +21,8 @@ module.exports = (wikitext, pos, setpos) => {
         } else if (curTemp.level < curLevel) {
             for(let i = 0; i < curLevel - curTemp.level; i++)
                 result.push({name: "blockquote-end"});
+        } else {
+            result.push({name: "new-line"});
         }
         result.push({name: "wikitext", parseFormat: true, text: curTemp.line});
     }

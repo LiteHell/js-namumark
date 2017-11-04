@@ -123,6 +123,9 @@ function HTMLRenderer(_options) {
             case 'plain':
                 appendResult(encodeHTMLComponent(i.text));
                 break;
+            case 'new-line':
+                appendResult('<br>');
+                break;
             case 'add-category':
                 categories.push(i.categoryName);
                 break;
