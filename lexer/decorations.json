@@ -1,0 +1,9 @@
+[
+    {"name" : "bold", "value" : "'''"},
+    {"name" : "italic", "value" : "''"},
+    {"name" : "strike", "value" : "~~"},
+    {"name" : "strike", "value" : "--"},
+    {"name" : "underline", "value" : "__"},
+    {"name" : "supscript", "value" : "^^"},
+    {"name" : "subscript", "value" : ",,"}
+]
