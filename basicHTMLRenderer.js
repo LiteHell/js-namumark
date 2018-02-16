@@ -294,6 +294,19 @@ function HTMLRenderer(_options) {
                 break;
             case 'paragraph-end':
                 appendResult('</p>');
+                break;
+            case 'wiki-box-start':
+                appendResult('<div ' + (i.style || '') + '>');
+                break;
+            case 'wiki-box-end':
+                appendResult('</div>');
+                break;
+            case 'folding-start':
+                appendResult('<details><summary>' + encodeHTMLComponent(i.summary) + '</summary>');
+                break;
+            case 'folding-end':
+                appendResult('</details>');
+                break;
         }
     }
     function finalLoop(callback) {

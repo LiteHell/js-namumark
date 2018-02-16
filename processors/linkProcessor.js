@@ -17,6 +17,7 @@ module.exports = (text, type, configs) => {
         if (!configs.included)
             return [{
                 name: "add-category",
+                blur: href[0].endsWith('#blur'),
                 categoryName: category
             }];
     } else if (/^파일:(.+)$/.test(href[0])) {
