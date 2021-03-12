@@ -27,6 +27,6 @@
   "devDependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "pug": "^2.0.0-rc.2"
+    "pug": "^3.0.1"
   }
 }
