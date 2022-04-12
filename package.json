@@ -19,7 +19,7 @@
   "author": "LiteHell",
   "license": "AGPL-3.0",
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^3.2.2",
     "extend": "^3.0.1",
     "htmlspecialchars": "^1.0.5",
     "moment": "^2.18.1"
