@@ -66,8 +66,12 @@ app.get('/wiki/:name', (req, res) => {
         });
     });
 });
+function runApp() {
+    app.listen(3132, () => {
+        console.log('listening on port 3132');
+    })
+}
 if (!fs.existsSync(__dirname + '/docs'))
-    fs.mkdir(__dirname + '/docs');
-app.listen(3132, () => {
-    console.log('listening on port 3132');
-})
+    fs.mkdir(__dirname + '/docs', runApp);
+else
+    runApp();
