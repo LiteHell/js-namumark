@@ -1,1 +1,3 @@
-exports.seekEOL = require('./seekEOL');
+import seekEOL from "./seekEOL";
+
+export { seekEOL };
