@@ -1,26 +1,34 @@
-module.exports = [{
-    open: '{{{',
-    close: '}}}',
+const rules: BracketRule[] = [
+  {
+    open: "{{{",
+    close: "}}}",
     multiline: false,
-    processor: 'textProcessor'
-}, {
-    open: '{{|',
-    close: '|}}',
+    processor: "textProcessor",
+  },
+  {
+    open: "{{|",
+    close: "|}}",
     multiline: false,
-    processor: 'closureProcessor'
-}, {
-    open: '[[',
-    close: ']]',
+    processor: "closureProcessor",
+  },
+  {
+    open: "[[",
+    close: "]]",
     multiline: false,
-    processor: 'linkProcessor'
-}, {
-    open: '[',
-    close: ']',
+    processor: "linkProcessor",
+  },
+  {
+    open: "[",
+    close: "]",
     multiline: false,
-    processor: 'macroProcessor'
-}, {
-    open: '@',
-    close: '@',
+    processor: "macroProcessor",
+  },
+  {
+    open: "@",
+    close: "@",
     multiline: false,
-    processor: 'textProcessor'
-}]
+    processor: "textProcessor",
+  },
+];
+
+export default rules;

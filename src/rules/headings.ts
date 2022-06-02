@@ -1,8 +1,9 @@
-let headings = {};
-headings["^= (.+) =$"] = 1;
-headings["^== (.+) ==$"] = 2;
-headings["^=== (.+) ===$"] = 3;
-headings["^==== (.+) ====$"] = 4;
-headings["^===== (.+) =====$"] = 5;
-headings["^====== (.+) ======$"] = 6;
-module.exports = headings;
+const rules: HeadingRule = {
+  "^= (.+) =$": 1,
+  "^== (.+) ==$": 2,
+  "^=== (.+) ===$": 3,
+  "^==== (.+) ====$": 4,
+  "^===== (.+) =====$": 5,
+  "^====== (.+) ======$": 6,
+};
+export default rules;

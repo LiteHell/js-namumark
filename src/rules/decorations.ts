@@ -1,11 +1,12 @@
-let formats = ["'''", "''", "~~", "--", "__", "^^", ",,"],
-    result = [];
-for(let i = 0; i < formats.length; i++) {
-    result.push({
-        open: formats[i],
-        close: formats[i],
-        multiline: false,
-        processor: 'textProcessor'
-    })
+const formats: string[] = ["'''", "''", "~~", "--", "__", "^^", ",,"],
+  rules: BracketRule[] = [];
+for (let i = 0; i < formats.length; i++) {
+  rules.push({
+    open: formats[i],
+    close: formats[i],
+    multiline: false,
+    processor: "textProcessor",
+  });
 }
-module.exports = result;
+
+export default rules;

@@ -1,4 +1,12 @@
-exports.headings = require('./headings.js');
-exports.singleBrackets = require('./singleBrackets.js').concat(require('./decorations.js'));
-exports.multiBrackets = require('./multiBrackets.js');
-exports.listTags = require('./listTags.js');
+import headings from "./headings";
+import singleBrackets from "./singleBrackets";
+import multiBrackets from "./multiBrackets";
+import listTags from "./listTags";
+import decorations from "./decorations";
+
+export default {
+  headings,
+  singleBrackets: singleBrackets.concat(decorations),
+  multiBrackets,
+  listTags,
+};

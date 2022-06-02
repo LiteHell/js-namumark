@@ -1,6 +1,10 @@
-module.exports = [{
-    open: '{{{',
-    close: '}}}',
+const rules: BracketRule[] = [
+  {
+    open: "{{{",
+    close: "}}}",
     multiline: true,
-    processor: 'renderProcessor'
-}];
+    processor: "renderProcessor",
+  },
+];
+
+export default rules;
