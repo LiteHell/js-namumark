@@ -1,6 +1,12 @@
 # js-namumark
 원래 목적은 [php-namumark](https://github.com/koreapyj/php-namumark)를 node.js로 포팅하는 거였으나 만들다 보니 이렇게 됬네요.
 
+## 빌드 방법
+```
+yarn
+yarn build
+```
+
 ## 사용 방법
 ```js
 let Namumark = require('namumark'),
