@@ -4,7 +4,7 @@
   "description": "Namumark parser written by LiteHell",
   "main": "index.js",
   "scripts": {
-    "test": "test/app.js"
+    "test": "node test/app.js"
   },
   "keywords": [
     "namumark",

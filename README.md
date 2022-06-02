@@ -28,7 +28,7 @@ namumark.parse((err, result) => {
 기본 HTML 렌더러는 매우 기본적인 기능만 합니다. 이것도 양해 바랍니다.
 
 ## 테스트 앱
-`npm install --only=dev`를 하여 개발 의존성들을 설치한 뒤 `node test/app.js`를 하면 테스트용 간단한 위키 앱이 돌아갑니다. 파서 테스트용이니 역사기능은 당연히 없습니다...
+`yarn`를 하여 의존성을 설치한 뒤 `yarn test`를 하면 테스트용 간단한 위키 앱이 돌아갑니다. 파서 테스트용이니 역사기능은 당연히 없습니다...
 
 ## 라이센스
 Copyrights (C) 2017 LiteHell
