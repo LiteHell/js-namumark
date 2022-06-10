@@ -2,3 +2,4 @@ node_modules/
 test/docs/
 dist
 .vscode
+src/namumarkPeg.ts

@@ -1,0 +1,44 @@
+- [x] Escape sequence
+- Inline syntaxes
+  - [x] Redirect
+  - [x] text decorations (Strong, italic, underline, strike, superscript, subscript)
+  - [x] literal-nowiki inline syntax
+  - [ ] Bracket-style inline text decorations
+    - [ ] Font size
+    - [ ] Font color
+  - [ ] Hyperlink
+    - [ ] To wiki documents
+    - [ ] Image embedding
+    - [ ] Category
+        - [ ] Hidden category
+  - [ ] Macro
+  - [ ] Footnotes
+- Line syntaxes
+    - [x] Headings
+    - [x] Horizontal lines
+- Block syntaxes
+    - [ ] List
+    - [ ] Unordered
+    - [ ] Ordered
+        - [ ] Start-number specification support
+    - [ ] Blockquote
+    - [ ] Folding
+- Table
+    - [ ] Basic support
+        - [ ] Newline using `\n`
+    - [ ] Colspan
+    - [ ] Rowspan
+    - [ ] Table/Cell decorations
+        - [ ] Table decorations
+            - [ ] Table alginment
+            - [ ] Table width, height
+            - [ ] Table background/text color
+        - [ ] Cell decorations
+            - [ ] Cell text alignment
+            - [ ] Horizontal
+            - [ ] Vertical
+            - [ ] Cell width, height
+            - [ ] Cell background/text color
+        - [ ] Row decorations
+            - [ ] Row background color
+            - [ ] Row text color

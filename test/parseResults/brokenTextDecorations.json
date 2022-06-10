@@ -1,0 +1,54 @@
+{
+  "redirect": false,
+  "result": [
+    {
+      "name": "textDecoration",
+      "markupType": "'''",
+      "children": [{ "name": "plainText", "content": "A''B" }]
+    },
+    { "name": "plainText", "content": "C''" },
+    { "name": "newLine" },
+    {
+      "name": "textDecoration",
+      "markupType": "'''",
+      "children": [
+        { "name": "plainText", "content": "A" },
+        {
+          "name": "textDecoration",
+          "markupType": "''",
+          "children": [{ "name": "plainText", "content": "B~~C" }]
+        },
+        { "name": "plainText", "content": "D" }
+      ]
+    },
+    { "name": "newLine" },
+    {
+      "name": "textDecoration",
+      "markupType": "~~",
+      "children": [
+        { "name": "plainText", "content": "A" },
+        {
+          "name": "textDecoration",
+          "markupType": "'''",
+          "children": [{ "name": "plainText", "content": "B" }]
+        },
+        { "name": "plainText", "content": "C" }
+      ]
+    },
+    { "name": "newLine" },
+    {
+      "name": "textDecoration",
+      "markupType": "'''",
+      "children": [
+        { "name": "plainText", "content": "A''B" },
+        {
+          "name": "textDecoration",
+          "markupType": "~~",
+          "children": [{ "name": "plainText", "content": "C" }]
+        },
+        { "name": "plainText", "content": "D" }
+      ]
+    },
+    { "name": "plainText", "content": "E''" }
+  ]
+}

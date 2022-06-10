@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 module.exports = {
     root: true,
     parser: '@typescript-eslint/parser',
@@ -9,4 +10,5 @@ module.exports = {
       'plugin:@typescript-eslint/recommended',
       "prettier"
     ],
+    ignorePatterns: ["src/namumarkPeg.ts"]
   };
