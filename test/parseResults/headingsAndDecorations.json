@@ -109,16 +109,79 @@
         { "name": "plainText", "content": " blah " }
       ]
     },
-    {
-        "name": "newLine"
-    },
+    { "name": "newLine" },
     {
       "name": "pre",
       "inline": true,
       "children": [
+        { "name": "plainText", "content": " '''nowiki ~~ inside ~~ ''' " }
+      ]
+    },
+    { "name": "newLine" },
+    { "name": "newLine" },
+    {
+      "name": "heading",
+      "headingLevel": 3,
+      "children": [
+        { "name": "plainText", "content": "Bracket decorations " },
         {
-          "name": "plainText",
-          "content": " '''nowiki ~~ inside ~~ ''' "
+          "name": "textColor",
+          "color": "#FF0000",
+          "children": [{ "name": "plainText", "content": "Red " }]
+        }
+      ]
+    },
+    {
+      "name": "textSize",
+      "level": 5,
+      "children": [
+        { "name": "plainText", "content": "5 times " },
+        {
+          "name": "textDecoration",
+          "markupType": "'''",
+          "children": [{ "name": "plainText", "content": "bigger" }]
+        },
+        { "name": "plainText", "content": " " }
+      ]
+    },
+    { "name": "plainText", "content": " " },
+    {
+      "name": "textSize",
+      "level": -3,
+      "children": [{ "name": "plainText", "content": "3 times smaller" }]
+    },
+    { "name": "plainText", "content": " " },
+    {
+      "name": "textColor",
+      "color": "#FF0000",
+      "children": [{ "name": "plainText", "content": "RED" }]
+    },
+    {
+      "content": " ",
+      "name": "plainText"
+    },
+    {
+      "name": "textColor",
+      "color": "#FFFFFF",
+      "children": [{ "name": "plainText", "content": "white" }]
+    },
+    { "name": "newLine" },
+    {
+      "name": "textSize",
+      "level": 4,
+      "children": [
+        { "name": "plainText", "content": "Bigger but " },
+        {
+          "name": "textSize",
+          "level": -3,
+          "children": [
+            { "name": "plainText", "content": "smaller then " },
+            {
+              "name": "textDecoration",
+              "markupType": "'''",
+              "children": [{ "name": "plainText", "content": "strong " }]
+            }
+          ]
         }
       ]
     }

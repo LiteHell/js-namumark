@@ -1,3 +1,5 @@
+import colornames from "colornames";
+
 /**
  * Namumark parser for tokenizing purpose
  */
@@ -6,8 +8,6 @@ export default class NamumarkParser {
   private parseInlineOnly: boolean;
   private pos: number;
   private inlineMarkups: string[] = [];
-  private inlineBracketMarkupCounter = 0;
-  private inlineBracketMarkups: number[] = [];
 
   /**
    * Initializes NamumarkParser
@@ -37,6 +37,7 @@ export default class NamumarkParser {
     this.wikiParagraphContent = this.wikiParagraphContent.bind(this);
     this.horizontalLine = this.horizontalLine.bind(this);
     this.inlineNowikiPre = this.inlineNowikiPre.bind(this);
+    this.bracketInlineDecoration = this.bracketInlineDecoration.bind(this);
   }
 
   /**
@@ -119,7 +120,13 @@ export default class NamumarkParser {
       }
     }
     for (const token of tokens) {
-      if (token.name === "heading" || token.name === "textDecoration") {
+      if (
+        token.name === "heading" ||
+        token.name === "textDecoration" ||
+        token.name === "textSize" ||
+        token.name === "textColor" ||
+        token.name === "pre"
+      ) {
         token.children = this.flattenPlainText(token.children);
       }
     }
@@ -247,6 +254,7 @@ export default class NamumarkParser {
       : this.choice([
           this.inlineTextDecorationMarkup,
           this.escapeSequence,
+          this.bracketInlineDecoration,
           this.inlineNowikiPre,
           this.plainNonNewLineCharacter,
         ]);
@@ -290,6 +298,72 @@ export default class NamumarkParser {
     } else {
       return null;
     }
+  }
+
+  private bracketInlineDecoration(): TokenizerSubMethodReturnType {
+    const htmlColors = colornames
+      .all()
+      .filter((i) => i.css)
+      .map((i) => i.name);
+    const colorPattern =
+      "#(([a-zA-Z0-9]{3}){1,2}|" +
+      htmlColors
+        .map((color) => {
+          let caseInsensitive = "";
+          for (let i = 0; i < color.length; i++) {
+            if (/([a-zA-Z])/.test(color[i])) {
+              caseInsensitive += `[${color[i].toLowerCase()}${color[
+                i
+              ].toUpperCase()}]`;
+            } else {
+              caseInsensitive += color[i];
+            }
+          }
+          return caseInsensitive;
+        })
+        .join("|") +
+      ")";
+    const consumed = this.consumeIfRegex(
+      "\\{\\{\\{(([\\+-][1-5])|" + colorPattern + ") "
+    );
+
+    if (consumed) {
+      let children: NamumarkToken[] = [];
+      while (!this.isEndOfText() && this.seekCharacter() !== "\n") {
+        const closure = this.consumeIfRegex(/\}\}\}/);
+        if (closure) {
+          const isTextSizeSyntax = !consumed.match[1].startsWith("#");
+          let result: NamumarkToken | undefined;
+          if (isTextSizeSyntax) {
+            result = {
+              name: "textSize",
+              level: parseInt(consumed.match[1]) as NamumarkTextSizeLevel,
+              children,
+            };
+          } else {
+            const colorname = colornames.get(consumed.match[1].substring(1));
+            result = {
+              name: "textColor",
+              color: (colorname
+                ? colorname.value
+                : consumed.match[1]
+              ).toUpperCase(), // Normalizes to upper case
+              children,
+            };
+          }
+          return [result];
+        } else {
+          const innerChild = this.wikiParagraphContent();
+          if (innerChild) {
+            children = children.concat(innerChild);
+          }
+        }
+      }
+      consumed.posRollbacker();
+      return null;
+    }
+
+    return null;
   }
 
   private choice(

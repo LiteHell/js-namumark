@@ -14,13 +14,22 @@ type NamumarkTokenName =
   | "heading"
   | "redirect"
   | "textDecoration"
+  | "textColor"
+  | "textSize"
   | "newLine"
   | "horizontalLine"
   | "pre";
 
+type NamumarkTextSizeLevel = -5 | -4 | -3 | -2 | -1 | 1 | 2 | 3 | 4 | 5;
 type NamumarkToken = {
   name: NamumarkTokenName;
 } & (
+  | { name: "textColor"; color: string; children: NamumarkToken[] }
+  | {
+      name: "textSize";
+      level: NamumarkTextSizeLevel;
+      children: NamumarkToken[];
+    }
   | {
       name: "plainText";
       content: string;

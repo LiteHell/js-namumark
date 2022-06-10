@@ -3,9 +3,9 @@
   - [x] Redirect
   - [x] text decorations (Strong, italic, underline, strike, superscript, subscript)
   - [x] literal-nowiki inline syntax
-  - [ ] Bracket-style inline text decorations
-    - [ ] Font size
-    - [ ] Font color
+  - [x] Bracket-style inline text decorations
+    - [x] Font size
+    - [x] Font color
   - [ ] Hyperlink
     - [ ] To wiki documents
     - [ ] Image embedding

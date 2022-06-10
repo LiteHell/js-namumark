@@ -10,3 +10,7 @@ Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
 '''strong''' ''italic'' ~~strike~~ --another strike-- ^^sup^^ ,,sub,, '''''Strong and italic'''''
 '''strong and ''italic inside'', ''italic and ~~strike~~'' blah '''
 {{{ '''nowiki ~~ inside ~~ ''' }}}
+
+=== Bracket decorations {{{#red Red }}} ===
+{{{+5 5 times '''bigger''' }}} {{{-3 3 times smaller}}} {{{#red RED}}} {{{#ffffff white}}}
+{{{+4 Bigger but {{{-3 smaller then '''strong '''}}}}}}
