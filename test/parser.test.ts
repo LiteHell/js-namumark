@@ -2,6 +2,8 @@ import NamumarkParser from "../src/parser";
 import fs from "fs/promises";
 import { join } from "path";
 
+jest.setTimeout(5000);
+
 async function testParser(testFileName: string) {
   const wikitext = await fs.readFile(
     join(process.cwd(), `test/wikitexts/${testFileName}.txt`),
