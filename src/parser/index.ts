@@ -1,4 +1,6 @@
 import colornames from "colornames";
+import deepClone from "./utils/deepClone";
+import flattenPlainText from "./utils/flattenPlainText";
 
 /**
  * Namumark parser for tokenizing purpose
@@ -91,7 +93,7 @@ export default class NamumarkParser {
         }
         if (token) {
           tokens = tokens.concat(token);
-          tokens = this.flattenPlainText(tokens);
+          tokens = flattenPlainText(tokens);
           break;
         }
       }
@@ -101,45 +103,6 @@ export default class NamumarkParser {
       redirect: false,
       result: tokens,
     };
-  }
-
-  /**
-   * Normalizes "plainText" tokens
-   * @param tokens Namumark tokens
-   * @returns Normalized namumark tokens
-   */
-  private flattenPlainText(tokens: NamumarkToken[]): NamumarkToken[] {
-    for (let i = 0; i < tokens.length - 1; ) {
-      const nextToken = tokens[i + 1];
-      const currentToken = tokens[i];
-      if (nextToken.name === "plainText" && currentToken.name === "plainText") {
-        currentToken.content += nextToken.content;
-        tokens.splice(i + 1, 1);
-      } else {
-        i++;
-      }
-    }
-    for (const token of tokens) {
-      if (
-        token.name === "heading" ||
-        token.name === "textDecoration" ||
-        token.name === "textSize" ||
-        token.name === "textColor" ||
-        token.name === "pre"
-      ) {
-        token.children = this.flattenPlainText(token.children);
-      }
-    }
-    return tokens;
-  }
-
-  /**
-   * Deep clones a simple object
-   * @param obj Object
-   * @returns Deep-cloned object
-   */
-  private deepClone(obj: any): any {
-    return JSON.parse(JSON.stringify(obj));
   }
 
   private lineGrammars(): TokenizerSubMethodReturnType {
@@ -489,7 +452,7 @@ export default class NamumarkParser {
   }
 
   private createPosRollbacker(pos?: number): PosRollbacker {
-    const deepCloned = this.deepClone(pos ?? this.pos);
+    const deepCloned = deepClone(pos ?? this.pos);
     return (() => {
       this.pos = deepCloned;
     }).bind(this);
