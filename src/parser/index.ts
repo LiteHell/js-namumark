@@ -5,17 +5,13 @@ import {
   inlineTextDecorationMarkup,
   wikiParagraph,
   wikiParagraphContent,
-} from "./tokenizers/inline";
-import {
   heading,
   horizontalLine,
   lineGrammar,
-} from "./tokenizers/lineGrammars";
-import {
   escapeSequence,
   newLine,
   plainNonNewLineCharacter,
-} from "./tokenizers/text";
+} from "./tokenizers";
 import deepClone from "./utils/deepClone";
 import flattenPlainText from "./utils/flattenPlainText";
 
