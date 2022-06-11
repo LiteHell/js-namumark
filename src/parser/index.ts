@@ -1,4 +1,3 @@
-import colornames from "colornames";
 import {
   bracketInlineDecoration,
   HyperLinkLike,
