@@ -22,7 +22,8 @@ export default function flattenPlainText(
       token.name === "textDecoration" ||
       token.name === "textSize" ||
       token.name === "textColor" ||
-      token.name === "pre"
+      token.name === "pre" ||
+      token.name === "link"
     ) {
       token.children = flattenPlainText(token.children);
     }

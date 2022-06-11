@@ -21,7 +21,8 @@ type NamumarkTokenizerName =
   | "inlineTextDecorationMarkup"
   | "bracketInlineDecoration"
   | "inlineNowikiPre"
-  | "plainNonNewLineCharacter";
+  | "plainNonNewLineCharacter"
+  | "HyperLinkLike";
 
 type NamumarkParserState = {
   inlineMarkups: string[];
@@ -56,7 +57,10 @@ type NamumarkTokenName =
   | "textSize"
   | "newLine"
   | "horizontalLine"
-  | "pre";
+  | "pre"
+  | "image"
+  | "category"
+  | "link";
 
 type NamumarkTextSizeLevel = -5 | -4 | -3 | -2 | -1 | 1 | 2 | 3 | 4 | 5;
 type NamumarkToken = {
@@ -92,7 +96,30 @@ type NamumarkToken = {
       children: NamumarkToken[];
     }
   | { name: "newLine" | "horizontalLine" }
+  | {
+      name: "image";
+      image: string;
+      options: Partial<NamumarkImageTokenOptions>;
+    }
+  | {
+      name: "category";
+      category: string;
+      blurred: boolean;
+    }
+  | {
+      name: "link";
+      target: string;
+      children: NamumarkToken[];
+    }
 );
+
+type NamumarkImageTokenOptions = {
+  width: number | string;
+  height: number | string;
+  horizontalAlign: "left" | "center" | "right";
+  verticalAlign: "top" | "bottom";
+  backgroundColor: string;
+};
 
 type NamumarkParserResult = {
   redirect: boolean;

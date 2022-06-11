@@ -4,6 +4,7 @@ export const wikiParagraphContent: TokenizerSubMethod = function () {
     : this.choice([
         "inlineTextDecorationMarkup",
         "escapeSequence",
+        "HyperLinkLike",
         "bracketInlineDecoration",
         "inlineNowikiPre",
         "plainNonNewLineCharacter",

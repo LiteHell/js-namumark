@@ -1,0 +1,124 @@
+{
+  "redirect": false,
+  "result": [
+    {
+      "name": "heading",
+      "headingLevel": 2,
+      "children": [{ "name": "plainText", "content": "Links" }]
+    },
+    {
+      "name": "textDecoration",
+      "markupType": "'''",
+      "children": [{ "name": "plainText", "content": "js-namumark" }]
+    },
+    { "name": "plainText", "content": " is a " },
+    {
+      "name": "link",
+      "target": "javascript",
+      "children": [{ "name": "plainText", "content": "javascript" }]
+    },
+    { "name": "plainText", "content": " library for parsing " },
+    {
+      "name": "link",
+      "target": "Namumark",
+      "children": [{ "name": "plainText", "content": "Namumark" }]
+    },
+    { "name": "plainText", "content": ", wiki markup language used in " },
+    {
+      "name": "link",
+      "target": "https://namu.wiki",
+      "children": [{ "name": "plainText", "content": "Namuwiki" }]
+    },
+    { "name": "plainText", "content": ". It's distributed under " },
+    {
+      "name": "link",
+      "target": "AGPL",
+      "children": [
+        {
+          "name": "textDecoration",
+          "markupType": "'''",
+          "children": [{ "name": "plainText", "content": "AGPL 3.0" }]
+        }
+      ]
+    },
+    { "name": "plainText", "content": " license." },
+    { "name": "newLine" },
+    { "name": "newLine" },
+    {
+      "name": "heading",
+      "headingLevel": 2,
+      "children": [{ "name": "plainText", "content": "Embedding" }]
+    },
+    {
+      "name": "image",
+      "image": "파일:example.png",
+      "options": {}
+    },
+    { "name": "plainText", "content": " " },
+    {
+      "name": "image",
+      "image": "파일:example.png",
+      "options": { "width": 100 }
+    },
+    { "name": "plainText", "content": " " },
+    {
+      "name": "image",
+      "image": "파일:example.png",
+      "options": {
+        "width": 100,
+        "height": 50,
+        "verticalAlign": "top",
+        "horizontalAlign": "left",
+        "backgroundColor": "red"
+      }
+    },
+    { "name": "newLine" },
+    {
+      "name": "category",
+      "category": "분류:Library",
+      "blurred": false
+    },
+    { "name": "plainText", "content": " " },
+    {
+      "name": "category",
+      "category": "분류:언어",
+      "blurred": false
+    },
+    { "name": "plainText", "content": " " },
+    {
+      "name": "category",
+      "category": "분류:숨김",
+      "blurred": true
+    },
+    { "name": "newLine" },
+    { "name": "newLine" },
+    {
+      "name": "heading",
+      "headingLevel": 2,
+      "children": [{ "name": "plainText", "content": "Non-embedding" }]
+    },
+    {
+      "name": "link",
+      "target": "파일:link.png",
+      "children": [{ "name": "plainText", "content": "파일:link.png" }]
+    },
+    { "name": "plainText", "content": " " },
+    {
+      "name": "link",
+      "target": "파일:link.png",
+      "children": [{ "name": "plainText", "content": "파일:link.png" }]
+    },
+    { "name": "plainText", "content": " " },
+    {
+      "name": "link",
+      "target": "분류:link",
+      "children": [{ "name": "plainText", "content": "분류:link" }]
+    },
+    { "name": "plainText", "content": " " },
+    {
+      "name": "link",
+      "target": "분류:link",
+      "children": [{ "name": "plainText", "content": "분류:link" }]
+    }
+  ]
+}

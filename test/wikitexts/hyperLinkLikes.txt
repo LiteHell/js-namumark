@@ -1,0 +1,9 @@
+== Links ==
+'''js-namumark''' is a [[javascript]] library for parsing [[Namumark]], wiki markup language used in [[https://namu.wiki|Namuwiki]]. It's distributed under [[AGPL|'''AGPL 3.0''']] license.
+
+== Embedding ==
+[[파일:example.png]] [[파일:example.png|width=100]] [[파일:example.png|width=100%&height=50%&align=top&align=left&bgcolor=red]]
+[[분류:Library]] [[분류:언어]] [[분류:숨김#blur]]
+
+== Non-embedding ==
+[[:파일:link.png]] [[ 파일:link.png]] [[ 분류:link]] [[:분류:link]]

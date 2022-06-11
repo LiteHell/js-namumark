@@ -1,6 +1,7 @@
 import colornames from "colornames";
 import {
   bracketInlineDecoration,
+  HyperLinkLike,
   inlineNowikiPre,
   inlineTextDecorationMarkup,
   wikiParagraph,
@@ -78,6 +79,7 @@ export default class NamumarkParser {
     );
     this.registerTokenizers("wikiParagraph", wikiParagraph);
     this.registerTokenizers("wikiParagraphContent", wikiParagraphContent);
+    this.registerTokenizers("HyperLinkLike", HyperLinkLike);
   }
 
   /**

@@ -27,3 +27,7 @@ test("Headings and text decorations", async () => {
 test("Broken text decorations", async () => {
   await testParser("brokenTextDecorations");
 });
+
+test("Hyperlink, image embedding, and category", async () => {
+  await testParser("hyperLinkLikes");
+});
