@@ -17,7 +17,6 @@
       "content": "Praesent lacinia varius arcu, non pharetra est congue a. Maecenas sed efficitur neque. Aenean ante nisi, ornare sit amet ex quis, porta iaculis est. Fusce aliquam sit amet metus iaculis gravida. Integer fermentum mi vel odio porttitor, quis malesuada ante molestie. Curabitur semper vestibulum mollis. Suspendisse euismod sit amet odio elementum condimentum."
     },
     { "name": "newLine" },
-    { "name": "newLine" },
     {
       "name": "heading",
       "headingLevel": 2,
@@ -27,7 +26,6 @@
       "name": "plainText",
       "content": "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis ornare, metus in ultrices convallis, arcu velit venenatis magna, vel gravida ipsum ex nec nisl. Integer sit amet volutpat risus. Vestibulum lacinia placerat tortor sit amet sodales. Suspendisse in sapien quis odio molestie vestibulum id eu eros. Curabitur suscipit velit mi, sed tincidunt sapien vestibulum eget. Donec eleifend ante et est facilisis, non semper purus vehicula. Nulla rutrum lacinia ipsum, vitae venenatis massa dapibus vitae. Pellentesque at lorem nulla. Duis malesuada justo et libero pulvinar laoreet. Vestibulum maximus risus vel purus accumsan, quis egestas purus tempor. Quisque sodales, magna in gravida ullamcorper, sem lectus lobortis nulla, ut pellentesque neque turpis ut neque. Nullam sed enim eget arcu aliquam ornare. Nullam imperdiet tellus magna, non viverra est iaculis quis."
     },
-    { "name": "newLine" },
     { "name": "newLine" },
     {
       "name": "heading",
@@ -117,7 +115,6 @@
         { "name": "plainText", "content": " '''nowiki ~~ inside ~~ ''' " }
       ]
     },
-    { "name": "newLine" },
     { "name": "newLine" },
     {
       "name": "heading",

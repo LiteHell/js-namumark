@@ -43,7 +43,6 @@
     },
     { "name": "plainText", "content": " license." },
     { "name": "newLine" },
-    { "name": "newLine" },
     {
       "name": "heading",
       "headingLevel": 2,
@@ -90,7 +89,6 @@
       "category": "분류:숨김",
       "blurred": true
     },
-    { "name": "newLine" },
     { "name": "newLine" },
     {
       "name": "heading",

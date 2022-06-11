@@ -113,14 +113,6 @@ export default class NamumarkParser {
     while (!this.isEndOfText()) {
       for (const tokenizer of tokenizers) {
         const token = this.tryTokenize(tokenizer);
-        if (
-          token &&
-          token.length === 1 &&
-          lineGrammarTokenNames.includes(token[0].name)
-        ) {
-          // consume a newline after line grammar
-          this.tryTokenize("newLine");
-        }
         if (token) {
           tokens = tokens.concat(token);
           tokens = flattenPlainText(tokens);
