@@ -6,11 +6,11 @@
   - [x] Bracket-style inline text decorations
     - [x] Font size
     - [x] Font color
-  - [ ] Hyperlink
-    - [ ] To wiki documents
-    - [ ] Image embedding
-    - [ ] Category
-        - [ ] Hidden category
+  - [x] Hyperlink
+    - [x] To wiki documents
+    - [x] Image embedding
+    - [x] Category
+        - [x] Hidden category
   - [ ] Macro
   - [ ] Footnotes
 - Line syntaxes
