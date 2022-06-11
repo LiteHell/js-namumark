@@ -1,4 +1,5 @@
 import colornames from "colornames";
+import NormalizeColor from "../../utils/NormalizeColor";
 
 export const bracketInlineDecoration: TokenizerSubMethod = function () {
   const htmlColors = colornames
@@ -41,13 +42,11 @@ export const bracketInlineDecoration: TokenizerSubMethod = function () {
             children,
           };
         } else {
-          const colorname = colornames.get(consumed.match[1].substring(1));
+          const color = NormalizeColor(consumed.match[1]);
+          if (color === null) break; // Invalid color
           result = {
             name: "textColor",
-            color: (colorname
-              ? colorname.value
-              : consumed.match[1]
-            ).toUpperCase(), // Normalizes to upper case
+            color,
             children,
           };
         }
