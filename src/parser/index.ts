@@ -34,7 +34,7 @@ export default class NamumarkParser {
     this.consumeCharacter = this.consumeCharacter.bind(this);
     this.createPosRollbacker = this.createPosRollbacker.bind(this);
     this.isLineStartNow = this.isLineStartNow.bind(this);
-    this.consumeIfRegex = this.consumeIfRegex.bind(this);
+    this.consumeIfRegexMatches = this.consumeIfRegexMatches.bind(this);
     this.newLine = this.newLine.bind(this);
     this.wikiParagraphContent = this.wikiParagraphContent.bind(this);
     this.horizontalLine = this.horizontalLine.bind(this);
@@ -114,7 +114,7 @@ export default class NamumarkParser {
       return null;
     }
 
-    const lineConsumed = this.consumeIfRegex(/^-{4,9}$/);
+    const lineConsumed = this.consumeIfRegexMatches(/^-{4,9}$/);
     if (lineConsumed) {
       return [
         {
@@ -139,7 +139,7 @@ export default class NamumarkParser {
         for (let k = 0; k < j; k++) patternText = "=" + patternText + "=";
         patternText = "^" + patternText + "$";
 
-        const lineConsumed = this.consumeIfRegex(patternText);
+        const lineConsumed = this.consumeIfRegexMatches(patternText);
         if (lineConsumed) {
           const inlineParser = new NamumarkParser(lineConsumed.match[1], true);
           const { result: children } = inlineParser.parse();
@@ -158,7 +158,7 @@ export default class NamumarkParser {
   }
 
   private escapeSequence(): TokenizerSubMethodReturnType {
-    const consumed = this.consumeIfRegex(/\/([^/])/);
+    const consumed = this.consumeIfRegexMatches(/\/([^/])/);
     if (consumed) {
       return [
         {
@@ -228,12 +228,12 @@ export default class NamumarkParser {
   }
 
   private inlineNowikiPre(): TokenizerSubMethodReturnType {
-    const consumed = this.consumeIfRegex(/\{\{\{/);
+    const consumed = this.consumeIfRegexMatches(/\{\{\{/);
     if (consumed) {
-      const rollback = consumed.posRollbacker;
+      const { rollback } = consumed;
       let content = "";
       while (!this.isEndOfText() && this.seekCharacter() !== "\n") {
-        const closure = this.consumeIfRegex(/\}\}\}/);
+        const closure = this.consumeIfRegexMatches(/\}\}\}/);
         if (closure) {
           return [
             {
@@ -286,14 +286,14 @@ export default class NamumarkParser {
         })
         .join("|") +
       ")";
-    const consumed = this.consumeIfRegex(
+    const consumed = this.consumeIfRegexMatches(
       "\\{\\{\\{(([\\+-][1-5])|" + colorPattern + ") "
     );
 
     if (consumed) {
       let children: NamumarkToken[] = [];
       while (!this.isEndOfText() && this.seekCharacter() !== "\n") {
-        const closure = this.consumeIfRegex(/\}\}\}/);
+        const closure = this.consumeIfRegexMatches(/\}\}\}/);
         if (closure) {
           const isTextSizeSyntax = !consumed.match[1].startsWith("#");
           let result: NamumarkToken | undefined;
@@ -322,7 +322,7 @@ export default class NamumarkParser {
           }
         }
       }
-      consumed.posRollbacker();
+      consumed.rollback();
       return null;
     }
 
@@ -346,14 +346,14 @@ export default class NamumarkParser {
     const markups = ["'''''", "'''", "''", "__", "~~", "--", "\\^\\^", ",,"];
     for (const markup of markups) {
       // Try to consume text decoration start markup
-      const consumed = this.consumeIfRegex(
+      const consumed = this.consumeIfRegexMatches(
         markup,
         markup === "'''" ? "'''''" : markup === "''" ? /'''('')?/ : null
       );
       if (consumed) {
         // Text decoration started
         // Create position rollback
-        const rollback = consumed.posRollbacker;
+        const { rollback } = consumed;
 
         // If it wasn't start markup, render it as plain text.
         // ignoring(returning null) makes a bug that "'''" becomes "'" (plaintext) + "''" (markup) under certain conditions
@@ -384,7 +384,7 @@ export default class NamumarkParser {
 
           // Test for all end markups
           for (const endMarkup of endMarkups) {
-            markupEndConsumed = this.consumeIfRegex(endMarkup);
+            markupEndConsumed = this.consumeIfRegexMatches(endMarkup);
             if (markupEndConsumed) {
               endedMarkup = endMarkup;
               break;
@@ -433,7 +433,7 @@ export default class NamumarkParser {
   }
 
   private consumeCharacter(pattern?: string | RegExp): {
-    posRollbacker: PosRollbacker;
+    rollback: PosRollbacker;
     character: string;
   } | null {
     const ch = this.wikitext[this.pos];
@@ -446,7 +446,7 @@ export default class NamumarkParser {
     const posRollbacker = this.createPosRollbacker();
     this.pos++;
     return {
-      posRollbacker,
+      rollback: posRollbacker,
       character: ch,
     };
   }
@@ -462,10 +462,10 @@ export default class NamumarkParser {
     return this.pos === 0 || this.wikitext[this.pos - 1] === "\n";
   }
 
-  private consumeIfRegex(
+  private consumeIfRegexMatches(
     pattern: RegExp | string,
     negativePattern: RegExp | string | null = null
-  ): null | { posRollbacker: PosRollbacker; match: RegExpMatchArray } {
+  ): null | { rollback: PosRollbacker; match: RegExpMatchArray } {
     // Match for pattern
     pattern = new RegExp(pattern, "ym");
     pattern.lastIndex = this.pos;
@@ -485,7 +485,7 @@ export default class NamumarkParser {
     if (match && !negativeMatched && this.pos === match.index) {
       const posRollbacker = this.createPosRollbacker(this.pos);
       this.pos += match[0].length;
-      return { posRollbacker, match };
+      return { rollback: posRollbacker, match };
     } else {
       return null;
     }
