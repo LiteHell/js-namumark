@@ -1,5 +1,5 @@
 export const escapeSequence: TokenizerSubMethod = function () {
-  const consumed = this.consumeIfRegexMatches(/\/([^/])/);
+  const consumed = this.consumeIfRegexMatches(/\\([^\\])/);
   if (consumed) {
     return [
       {
