@@ -1,0 +1,31 @@
+{
+  "redirect": false,
+  "result": [
+    {
+      "name": "macro",
+      "macroName": "br"
+    },
+    {
+      "name": "macro",
+      "macroName": "dday",
+      "options": "2021-1-1"
+    },
+    {
+      "name": "macro",
+      "macroName": "age",
+      "options": "1)2"
+    },
+    {
+      "name": "macro",
+      "macroName": "clearfix"
+    },
+    {
+      "name": "macro",
+      "macroName": "목차"
+    },
+    {
+      "name": "plainText",
+      "content": "[notmacro]"
+    }
+  ]
+}

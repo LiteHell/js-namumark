@@ -31,3 +31,7 @@ test("Broken text decorations", async () => {
 test("Hyperlink, image embedding, and category", async () => {
   await testParser("hyperLinkLikes");
 });
+
+test("Macros", async () => {
+  await testParser("macros");
+});

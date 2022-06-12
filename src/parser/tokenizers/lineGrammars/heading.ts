@@ -15,7 +15,9 @@ export const heading: TokenizerSubMethod = function () {
 
       const lineConsumed = this.consumeIfRegexMatches(patternText);
       if (lineConsumed) {
-        const inlineParser = new NamumarkParser(lineConsumed.match[1], true);
+        const inlineParser = new NamumarkParser(lineConsumed.match[1], {
+          parseInlineOnly: true,
+        });
         const { result: children } = inlineParser.parse();
         return [
           {

@@ -11,7 +11,7 @@
     - [x] Image embedding
     - [x] Category
         - [x] Hidden category
-  - [ ] Macro
+  - [x] Macro
   - [ ] Footnotes
 - Line syntaxes
     - [x] Headings

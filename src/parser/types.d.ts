@@ -22,10 +22,16 @@ type NamumarkTokenizerName =
   | "bracketInlineDecoration"
   | "inlineNowikiPre"
   | "plainNonNewLineCharacter"
-  | "HyperLinkLike";
+  | "HyperLinkLike"
+  | "Macro";
 
 type NamumarkParserState = {
   inlineMarkups: string[];
+};
+
+type NamumarkParserOptions = {
+  parseInlineOnly: boolean;
+  macroNames: string[];
 };
 
 type NamumarkParserHelper = {
@@ -45,6 +51,7 @@ type NamumarkParserHelper = {
     rollback: PosRollbacker;
     match: RegExpMatchArray;
   } | null;
+  getMacroNames(): string[];
   state: NamumarkParserState;
 };
 
@@ -60,7 +67,8 @@ type NamumarkTokenName =
   | "pre"
   | "image"
   | "category"
-  | "link";
+  | "link"
+  | "macro";
 
 type NamumarkTextSizeLevel = -5 | -4 | -3 | -2 | -1 | 1 | 2 | 3 | 4 | 5;
 type NamumarkToken = {
@@ -111,6 +119,7 @@ type NamumarkToken = {
       target: string;
       children: NamumarkToken[];
     }
+  | { name: "macro"; macroName: string; options?: string }
 );
 
 type NamumarkImageTokenOptions = {

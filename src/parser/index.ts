@@ -1,3 +1,4 @@
+import defaultOptions from "./defaultOptions";
 import {
   bracketInlineDecoration,
   HyperLinkLike,
@@ -11,6 +12,7 @@ import {
   escapeSequence,
   newLine,
   plainNonNewLineCharacter,
+  Macro,
 } from "./tokenizers";
 import deepClone from "./utils/deepClone";
 import flattenPlainText from "./utils/flattenPlainText";
@@ -29,15 +31,31 @@ export default class NamumarkParser {
   private state: NamumarkParserState = {
     inlineMarkups: [],
   };
+  private macroNames: string[] = [];
   private tokenizers: TokenizerDictionary = {} as TokenizerDictionary;
 
   /**
    * Initializes NamumarkParser
    * @param wikitext Wikitext to parse
    */
-  constructor(wikitext: string, parseInlineOnly = false) {
+  constructor(wikitext: string, options: Partial<NamumarkParserOptions> = {}) {
+    options = deepClone(options);
+    Object.assign(options, defaultOptions);
     this.wikitext = wikitext;
-    this.parseInlineOnly = parseInlineOnly;
+    this.parseInlineOnly = options.parseInlineOnly ?? false;
+    this.macroNames = options.macroNames ?? [
+      "include",
+      "age",
+      "date",
+      "datetime",
+      "dday",
+      "목차",
+      "tableofcontents",
+      "각주",
+      "footnote",
+      "br",
+      "clearfix",
+    ];
     this.pos = 0;
 
     // bind all helper functions
@@ -51,6 +69,7 @@ export default class NamumarkParser {
     this.consumeIfRegexMatches = this.consumeIfRegexMatches.bind(this);
     this.createHelper = this.createHelper.bind(this);
     this.registerTokenizers = this.registerTokenizers.bind(this);
+    this.getMacroNames = this.getMacroNames.bind(this);
 
     // register line grammar related tokenizers
     this.registerTokenizers("horizontalLine", horizontalLine);
@@ -75,6 +94,7 @@ export default class NamumarkParser {
     this.registerTokenizers("wikiParagraph", wikiParagraph);
     this.registerTokenizers("wikiParagraphContent", wikiParagraphContent);
     this.registerTokenizers("HyperLinkLike", HyperLinkLike);
+    this.registerTokenizers("Macro", Macro);
   }
 
   /**
@@ -153,6 +173,7 @@ export default class NamumarkParser {
       isLineStartNow: this.isLineStartNow,
       consumeIfRegexMatches: this.consumeIfRegexMatches,
       state: this.state,
+      getMacroNames: this.getMacroNames,
     };
   }
 
@@ -253,5 +274,9 @@ export default class NamumarkParser {
       }
     }
     return null;
+  }
+
+  private getMacroNames(): string[] {
+    return deepClone(this.macroNames);
   }
 }
