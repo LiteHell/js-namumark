@@ -41,3 +41,7 @@ test("Hyperlink, image embedding, and category", async () => {
 test("Macros", async () => {
   await testParser("macros");
 });
+
+test("Footnotes", async () => {
+  await testParser("footnotes");
+});

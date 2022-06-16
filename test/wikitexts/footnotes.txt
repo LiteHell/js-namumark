@@ -1,0 +1,4 @@
+=== Foonote test ===
+Apple is a fruit[* something you can eat from ''trees'' and {{{+3 plants}}}], and sweet[* like a candy and a chocolate]. It's delicious[*reason because it's sweet] and therefore enjoyed by many people.
+Some poeple say that '''Apple is an company[*reason gathering of people for earning the money] that makes electronic product[*artifical ]'''. It's also true.
+You can add a thing[*thing [*thing [*thing [*thing]]]]

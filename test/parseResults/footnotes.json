@@ -1,0 +1,93 @@
+{
+  "redirect": false,
+  "result": [
+    {
+      "name": "heading",
+      "headingLevel": 3,
+      "children": [{ "name": "plainText", "content": "Foonote test" }]
+    },
+    { "name": "plainText", "content": "Apple is a fruit" },
+    {
+      "name": "footnote",
+      "children": [
+        { "name": "plainText", "content": "something you can eat from " },
+        {
+          "name": "textDecoration",
+          "markupType": "''",
+          "children": [{ "name": "plainText", "content": "trees" }]
+        },
+        { "name": "plainText", "content": " and " },
+        {
+          "name": "textSize",
+          "level": 3,
+          "children": [{ "name": "plainText", "content": "plants" }]
+        }
+      ]
+    },
+    { "name": "plainText", "content": ", and sweet" },
+    {
+      "name": "footnote",
+      "children": [
+        { "name": "plainText", "content": "like a candy and a chocolate" }
+      ]
+    },
+    { "name": "plainText", "content": ". It's delicious" },
+    {
+      "name": "footnote",
+      "footnoteName": "reason",
+      "children": [{ "name": "plainText", "content": "because it's sweet" }]
+    },
+    {
+      "name": "plainText",
+      "content": " and therefore enjoyed by many people."
+    },
+    { "name": "newLine" },
+    { "name": "plainText", "content": "Some poeple say that " },
+    {
+      "name": "textDecoration",
+      "markupType": "'''",
+      "children": [
+        { "name": "plainText", "content": "Apple is an company" },
+        {
+          "name": "footnote",
+          "footnoteName": "reason",
+          "children": [
+            {
+              "name": "plainText",
+              "content": "gathering of people for earning the money"
+            }
+          ]
+        },
+        { "name": "plainText", "content": " that makes electronic product" },
+        { "name": "footnote", "footnoteName": "artifical", "children": [] }
+      ]
+    },
+    { "name": "plainText", "content": ". It's also true." },
+    {
+      "name": "newLine"
+    },
+    {
+      "name": "plainText",
+      "content": "You can add a thing"
+    },
+    {
+      "name": "footnote",
+      "footnoteName": "thing",
+      "children": [
+        {
+          "name": "footnote",
+          "footnoteName": "thing",
+          "children": [
+            {
+              "name": "footnote",
+              "footnoteName": "thing",
+              "children": [
+                { "name": "footnote", "footnoteName": "thing", "children": [] }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -23,7 +23,8 @@ export default function flattenPlainText(
       token.name === "textSize" ||
       token.name === "textColor" ||
       token.name === "pre" ||
-      token.name === "link"
+      token.name === "link" ||
+      token.name === "footnote"
     ) {
       token.children = flattenPlainText(token.children);
     }

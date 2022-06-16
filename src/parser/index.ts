@@ -13,6 +13,7 @@ import {
   newLine,
   plainNonNewLineCharacter,
   Macro,
+  Footnote,
 } from "./tokenizers";
 import deepClone from "./utils/deepClone";
 import flattenPlainText from "./utils/flattenPlainText";
@@ -95,6 +96,7 @@ export default class NamumarkParser {
     this.registerTokenizers("wikiParagraphContent", wikiParagraphContent);
     this.registerTokenizers("HyperLinkLike", HyperLinkLike);
     this.registerTokenizers("Macro", Macro);
+    this.registerTokenizers("Footnote", Footnote);
   }
 
   /**

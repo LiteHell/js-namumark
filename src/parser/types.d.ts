@@ -23,7 +23,8 @@ type NamumarkTokenizerName =
   | "inlineNowikiPre"
   | "plainNonNewLineCharacter"
   | "HyperLinkLike"
-  | "Macro";
+  | "Macro"
+  | "Footnote";
 
 type NamumarkParserState = {
   inlineMarkups: string[];
@@ -68,7 +69,8 @@ type NamumarkTokenName =
   | "image"
   | "category"
   | "link"
-  | "macro";
+  | "macro"
+  | "footnote";
 
 type NamumarkTextSizeLevel = -5 | -4 | -3 | -2 | -1 | 1 | 2 | 3 | 4 | 5;
 type NamumarkToken = {
@@ -120,6 +122,7 @@ type NamumarkToken = {
       children: NamumarkToken[];
     }
   | { name: "macro"; macroName: string; options?: string }
+  | { name: "footnote"; footnoteName?: string; children: NamumarkToken[] }
 );
 
 type NamumarkImageTokenOptions = {

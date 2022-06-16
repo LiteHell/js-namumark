@@ -12,7 +12,7 @@
     - [x] Category
         - [x] Hidden category
   - [x] Macro
-  - [ ] Footnotes
+  - [x] Footnotes
 - Line syntaxes
     - [x] Headings
     - [x] Horizontal lines
