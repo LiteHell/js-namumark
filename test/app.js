@@ -6,6 +6,8 @@ const fs = require('fs'),
     bodyParser = require('body-parser'),
     app = express();
 
+app.use(bodyParser.json());
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 
@@ -67,7 +69,7 @@ app.get('/wiki/:name', (req, res) => {
     });
 });
 if (!fs.existsSync(__dirname + '/docs'))
-    fs.mkdir(__dirname + '/docs');
+    fs.mkdirSync(__dirname + '/docs');
 app.listen(3132, () => {
     console.log('listening on port 3132');
 })
